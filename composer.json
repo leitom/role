@@ -7,7 +7,8 @@
     "authors": [
         {
             "name": "Tommy Leirvik",
-            "email": "leirvik.tommy@gmail.com"
+            "email": "leirvik.tommy@gmail.com",
+            "role": "developer"
         }
     ],
     "require": {
@@ -20,6 +21,11 @@
         ],
         "psr-0": {
             "Leitom\\Role\\": "src/"
+        }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
         }
     },
     "minimum-stability": "dev"

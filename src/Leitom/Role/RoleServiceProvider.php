@@ -19,6 +19,9 @@ class RoleServiceProvider extends ServiceProvider
 	 */
 	public function boot()
 	{
+		// Add package
+		$this->package('leitom/role');
+
 		// Register the role manager filter
 		// This filter is used to trigger the protection of routes.
 		// It will also contain the auth before filter so that it does not have to
