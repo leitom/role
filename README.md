@@ -61,6 +61,16 @@ identified by option `super.admin.id` in config.
 Run the following command each time you add a new route to your application: `php artisan routes:sync` this will 
 update all routes to the db table and clear the laravel cache.
 
+### Access level
+In your views you can use `Role::accessLevel()` to check for additional access level. That means if the user have access
+to the current route/uri but to see a part of the page the access level have to be larger than 4:
+
+```php
+if (Role::accessLevel() > 4) {
+	echo "Level 5 acceess granted.";
+}
+```
+
 ### Laravel extensions
 The package have extended the HtmlBuilder and the FormBuilder.
 This allows us to check for role access on forms and when generating links.
