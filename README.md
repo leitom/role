@@ -32,13 +32,11 @@ to the provider array.
 
 ## Setup
 
-#### Migrations
-First we need to get the required table structure for routes and roles
+#### Migrations, Seeds and Configs
+The package provides an artisan command for doing all this by it's self just type `php artisan role:install`
 
-#### Seed / or create your own super admin role
-
-#### Config
-Publish the package config
+Or you can check out: [http://laravel.com/docs/packages](http://laravel.com/docs/packages) on how to publish the packages
+migrations, seeds and config files.
 
 #### Add filter
 Add the filter with the name from config `role.control.identifier` to your route/group

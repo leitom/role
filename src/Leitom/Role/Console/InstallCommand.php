@@ -27,6 +27,12 @@ class InstallCommand extends Command
 	 */
 	public function fire()
 	{
-		$this->info('Fire a bounch of artisan commands for automatic installing migrations, seeds, serviceprovider');
+		// Publish the config file
+		$this->call('config:publish', array('leitom/role'));
+		
+		// Migrations
+		$this->call('migrate', array('--package' => 'leitom/role'));
+		
+		$this->info('Installation of package: leitom/role finished.');
 	}
 }
