@@ -79,6 +79,13 @@ class RoleServiceProvider extends ServiceProvider
 		});
 
 		$this->commands('command.leitom.role.sync');
+
+		// Install package command
+		$this->app['command.leitom.role.install'] = $this->app->share(function($app) {
+			return new Console\InstallCommand();
+		});
+
+		$this->commands('command.leitom.role.install');
 	}
 
 	/**
@@ -181,6 +188,7 @@ class RoleServiceProvider extends ServiceProvider
 	{
 		return array(
 			'command.leitom.role',
+			'command.leitom.role.install',
 			'leitom.role.route',
 			'leitom.role.manager',
 			'Leitom\Role\RouteScannerInterface',

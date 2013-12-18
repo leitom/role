@@ -30,7 +30,7 @@ Once this operation completes, the final step is to add the service provider. Op
 to the provider array.
 `'Leitom\Role\RoleServiceProvider'`
 
-### Setup
+## Setup
 
 #### Migrations
 First we need to get the required table structure for routes and roles
@@ -43,11 +43,6 @@ Publish the package config
 #### Add filter
 Add the filter with the name from config `role.control.identifier` to your route/group
 
-#### Sync routes
-The package comes with an artisan command for automatic syncing the routes to persisant storage
-it also comes with an option in config `super.admin.sync` for syncing all new routes to an super admin role 
-identified by option `super.admin.id` in config.
-
 #### Integrating with your eloquent auth model
 Add the following line to your auth model default it's: `app/models/User.php`
 
@@ -57,3 +52,22 @@ public function roles()
 	return $this->belongsToMany('Leitom\Role\Eloquent\Role', 'user_role');
 }
 ```
+
+## Usage
+
+#### Sync routes
+The package comes with an artisan command for automatic syncing the routes to persisant storage
+it also comes with an option in config `super.admin.sync` for syncing all new routes to an super admin role 
+identified by option `super.admin.id` in config.
+
+Run the following command each time you add a new route to your application: `php artisan routes:sync` this will 
+update all routes to the db table and clear the laravel cache.
+
+### Laravel extensions
+The package have extended the HtmlBuilder and the FormBuilder.
+This allows us to check for role access on forms and when generating links.
+
+When using `HTML::linkRoute()` then the package check's if the current logged in user have access to the route 
+if not the link dont show. same for `HTML::linkAction()`
+The package includes an function `HTML::roleCheckLink()` wich are the same as `HTML::link()` except that the third parameter 
+excepts an array of parameters like `HTML::linkRoute() and HTML::linkAction()` does.
