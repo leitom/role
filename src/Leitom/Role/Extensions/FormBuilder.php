@@ -1,7 +1,7 @@
 <?php namespace Leitom\Role\Extensions;
 
 use \Illuminate\Routing\UrlGenerator;
-use \Illuminate\Html\HtmlBuilder;
+use \Illuminate\Html\HtmlBuilder as IlluminateHtmlBuilder;
 use \Illuminate\Session\Store as Session;
 use \Illuminate\Html\FormBuilder as IlluminateFormBuilder;
 use \Leitom\Role\Contracts\ManagerInterface;
@@ -33,7 +33,7 @@ class FormBuilder extends IlluminateFormBuilder
      * @return void
      */
     public function __construct(
-        HtmlBuilder $html, 
+        IlluminateHtmlBuilder $html, 
         UrlGenerator $url, 
         $csrfToken,
         ManagerInterface $manager

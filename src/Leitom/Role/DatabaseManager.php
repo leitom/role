@@ -8,6 +8,7 @@ use \Illuminate\Auth\UserInterface;
 use \Illuminate\Routing\Route;
 use \Illuminate\Routing\Router;
 use \Illuminate\Auth\AuthManager;
+use \Illuminate\Config\Repository;
 
 class DatabaseManager implements ManagerInterface
 {
@@ -56,27 +57,44 @@ class DatabaseManager implements ManagerInterface
 	protected $auth;
 
 	/**
+	 * Instance of Config repository
+	 *
+	 * @var \Illuminate\Config\Repository $config
+	 */
+	protected $config;
+
+	/**
 	 * The identifier for role control
 	 * 
 	 * @var string $roleControlIdentifier
 	 */
-	protected $roleControlIdentifier = 'role-control';
+	protected $roleControlIdentifier = 'role';
 
 	/**
 	 * Create an instance of the Manager
 	 *
-	 * @param  \Illuminate\Routing\Router 			$router
-	 * @param  \Illuminate\Database\DatabaseManager $db
+	 * @param  \Illuminate\Routing\Router 			 $router
+	 * @param  \Illuminate\Database\DatabaseManager  $db
+	 * @param  \Illuminate\Auth\AuthManager 		 $auth
+	 * @param  \Illuminate\Config\repository 		 $config
 	 * @return void
 	 */
-	public function __construct(Router $router, IlluminateDatabaseManager $db, AuthManager $auth)
-	{
+	public function __construct(
+		Router $router, 
+		IlluminateDatabaseManager $db, 
+		AuthManager $auth,
+		Repository $config
+	) {
 		$this->db = $db;
 		$this->router = $router;
 		$this->auth = $auth;
+		$this->config = $config;
 
 		// Set the user object
 		$this->user = $this->auth->user();
+
+		// Set the role control identifier from config
+		$this->roleControlIdentifier = $this->config->get('role::role.control.identifier');
 	}
 
 	/**

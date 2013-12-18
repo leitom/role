@@ -6,6 +6,7 @@ use \Leitom\Role\Contracts\RouteRepositoryInterface;
 use \Leitom\Role\Contracts\RoleRepositoryInterface;
 use \Leitom\Role\Contracts\RouteScannerInterface;
 use \Leitom\Role\Eloquent\Route;
+use \Illuminate\Config\Repository;
 
 class EloquentRouteRepository implements RouteRepositoryInterface
 {
@@ -17,14 +18,34 @@ class EloquentRouteRepository implements RouteRepositoryInterface
 	protected $routes;
 
 	/**
+	 * Instance of Config repository
+	 *
+	 * @var \Illuminate\Config\Repository $config
+	 */
+	protected $config;
+
+	/**
+	 * If we should sync the routes to a default role
+	 * ex. super admin
+	 *
+	 * @var boolean $roleSync
+	 */
+	protected $roleSync = true;
+
+	/**
 	 * Generate a new instance of the EloquentRouteRepository instance
 	 *
-	 * @param  \Leitom\Role\Eloquent\Route $route
+	 * @param  \Leitom\Role\Eloquent\Route 	  $route
+	 * @param  \Illuminate\Config\repository  $config
 	 * @return void
 	 */
-	public function __construct(Route $routes)
+	public function __construct(Route $routes, Repository $config)
 	{
 		$this->routes = $routes;
+		$this->config = $config;
+
+		// Set role sync
+		$this->roleSync = $this->config->get('role::super.admin.sync');
 	}
 
 	/**
@@ -100,9 +121,11 @@ class EloquentRouteRepository implements RouteRepositoryInterface
 				);
 			}
 
-			// Sync routes to super admin role
-			$roleRepository->attachRoutesToSuperAdmin($roleSync);
-
+			// Sync routes to super admin role(if enabled)
+			if ($this->roleSync) {
+				$roleRepository->attachRoutesToSuperAdmin($roleSync);
+			}
+			
 			// Clean up all routes that are outdated
 			$this->cleanup();
 		}

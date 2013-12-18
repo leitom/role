@@ -26,7 +26,7 @@ class RoleServiceProvider extends ServiceProvider
 		// This filter is used to trigger the protection of routes.
 		// It will also contain the auth before filter so that it does not have to
 		// be implemented at the same time.
-		\Route::filter('role-control', 'Leitom\Role\Filters\Role');
+		\Route::filter($this->app['config']->get('role::role.control.identifier'), 'Leitom\Role\Filters\Role');
 	}
 
 	/**
@@ -49,7 +49,7 @@ class RoleServiceProvider extends ServiceProvider
 
 		// Register the manager instance to the ioc container
 		$this->app['leitom.role.manager'] = $this->app->share(function($app) {
-			return new DatabaseManager($app['router'], $app['db'], $app['auth']);
+			return new DatabaseManager($app['router'], $app['db'], $app['auth'], $app['config']);
 		});
 
 		// Register all commands provided by the package
@@ -108,12 +108,12 @@ class RoleServiceProvider extends ServiceProvider
 	{
 		// Bind the implementation of RoleRepositoryInterface to the ioc container
 		$this->app['Leitom\Role\RoleRepositoryInterface'] = $this->app->share(function($app) {
-			return new Repositories\EloquentRoleRepository($app['leitom.role.role']);
+			return new Repositories\EloquentRoleRepository($app['leitom.role.role'], $app['config']);
 		});
 
 		// Bind the Eloquent Route Repository to the interface implementation
 		$this->app['Leitom\Role\RouteRepositoryInterface'] = $this->app->share(function($app) {
-			return new Repositories\EloquentRouteRepository($app['leitom.role.route']);
+			return new Repositories\EloquentRouteRepository($app['leitom.role.route'], $app['config']);
 		});
 	}
 

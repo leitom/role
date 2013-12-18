@@ -2,6 +2,7 @@
 
 use \Leitom\Role\Contracts\RoleRepositoryInterface;
 use \Leitom\Role\Eloquent\Role;
+use \Illuminate\Config\Repository;
 
 class EloquentRoleRepository  implements RoleRepositoryInterface
 {
@@ -21,14 +22,33 @@ class EloquentRoleRepository  implements RoleRepositoryInterface
 	protected $superAdminAccessLevel = 10;
 
 	/**
+	 * The identifier for the super admin role
+	 *
+	 * @var integer $superAdminIdentifier
+	 */
+	protected $superAdminIdentifier = 1;
+
+	/**
+	 * Instance of Config repository
+	 *
+	 * @var \Illuminate\Config\Repository $config
+	 */
+	protected $config;
+
+	/**
 	 * Create an instance of EloquentRoleRepository
 	 *
-	 * @param  \Leitom\Role\Eloquent\Role $roles
+	 * @param  \Leitom\Role\Eloquent\Role 	  $roles
+	 * @param  \Illuminate\Config\repository  $config
 	 * @return void
 	 */
-	public function __construct(Role $roles)
+	public function __construct(Role $roles, Repository $config)
 	{
 		$this->roles = $roles;
+		$this->config = $config;
+
+		// Set the super admin identifier
+		$this->superAdminIdentifier = $this->config->get('role::super.admin.id');
 	}
 
 	/**
@@ -62,7 +82,7 @@ class EloquentRoleRepository  implements RoleRepositoryInterface
 	public function attachRoutesToSuperAdmin(array $routes = array())
 	{
 		// Get the super admin role
-		$role = $this->findById(1);
+		$role = $this->findById($this->superAdminIdentifier);
 
 		// Sync all routes
 		$role->routes()->sync($routes);
