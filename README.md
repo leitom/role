@@ -1,8 +1,6 @@
 Easy but scalable role manager for laravel 4.1
 ====
 
-# This package are not done yet and not ready for use!
-
 This package makes it very easy to add role capabilities to laravel 4.1
 It uses routes as access points. That means that all routes are synced to a
 persisant storage(default: database) and then routes connect to different roles that can be connected to users etc.
@@ -37,6 +35,8 @@ The package provides an artisan command for doing all this by it's self just typ
 
 Or you can check out: [http://laravel.com/docs/packages](http://laravel.com/docs/packages) on how to publish the packages
 migrations, seeds and config files.
+
+NB: Seeds are not included yet!
 
 #### Add filter
 Add the filter with the name from config `role.control.identifier` to your route/group
