@@ -30,11 +30,27 @@ to the provider array.
 
 ## Setup
 
-#### Migrations, Seeds and Configs
+#### Migrations and Configs
 The package provides an artisan command for doing all this by it's self just type `php artisan role:install`
 
 Or you can check out: [http://laravel.com/docs/packages](http://laravel.com/docs/packages) on how to publish the packages
-migrations, seeds and config files.
+migrations and config files.
+
+#### Seed
+Generate a seed file to populate the super admin role with id 1, it will lokk something like this:
+
+```php
+class RolesTableSeeder extends Seeder
+{
+	public function run()
+	{
+		$role = new Leitom\Role\Eloquent\Role;
+		$role->name = 'Super admin';
+		$role->description = 'A super admin has access to all routes';
+		$role->save();
+	}
+}
+```
 
 NB: Seeds are not included yet!
 

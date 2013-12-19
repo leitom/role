@@ -33,6 +33,7 @@ class InstallCommand extends Command
 		// Migrations
 		$this->call('migrate', array('--package' => 'leitom/role'));
 		
+		// Display finished message
 		$this->info('Installation of package: leitom/role finished.');
 	}
 }
