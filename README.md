@@ -75,6 +75,17 @@ identified by option `super.admin.id` in config.
 Run the following command each time you add a new route to your application: `php artisan routes:sync` this will 
 update all routes to the db table and clear the laravel cache.
 
+### Access check functions
+
+Check if the current logged in user has access to a url
+`Role::hasUrlAccess($method, $url, $host = '')`
+
+Check if the current logged in user has access to a route
+`Role::hasRouteAccess($method, $route, $host = '')`
+
+Check if the current logged in user has access to a action
+`hasActionAccess($method, $action, $host = '')`
+        
 ### Access level
 In your views you can use `Role::accessLevel()` to check for additional access level. That means if the user have access
 to the current route/uri but to see a part of the page the access level have to be larger than 4:
