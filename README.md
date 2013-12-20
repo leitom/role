@@ -52,8 +52,6 @@ class RolesTableSeeder extends Seeder
 }
 ```
 
-NB: Seeds are not included yet!
-
 #### Add filter
 Add the filter with the name from config `role.control.identifier` to your route/group
 
