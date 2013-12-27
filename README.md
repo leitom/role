@@ -32,6 +32,7 @@ to the provider array.
 
 #### Migrations and Configs
 The package provides an artisan command for doing all this by it's self just type `php artisan role:install`
+NB: This package is a work in progress, if you find problems with using the installer use the file located in `src/migrations/structure.mysql` to get the table structure.
 
 Or you can check out: [http://laravel.com/docs/packages](http://laravel.com/docs/packages) on how to publish the packages
 migrations and config files.
