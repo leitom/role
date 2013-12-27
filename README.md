@@ -104,4 +104,4 @@ This allows us to check for role access on forms and when generating links.
 When using `HTML::linkRoute()` then the package check's if the current logged in user have access to the route 
 if not the link dont show. same for `HTML::linkAction()`
 The package includes an function `HTML::roleCheckLink()` wich are the same as `HTML::link()` except that the third parameter 
-excepts an array of parameters like `HTML::linkRoute() and HTML::linkAction()` does.
+accepts an array of parameters like `HTML::linkRoute() and HTML::linkAction()` does.
