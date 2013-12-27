@@ -1,0 +1,120 @@
+-- phpMyAdmin SQL Dump
+-- version 3.5.7
+-- http://www.phpmyadmin.net
+--
+-- Vert: localhost
+-- Generert den: 27. Des, 2013 10:40 AM
+-- Tjenerversjon: 5.5.29
+-- PHP-Versjon: 5.4.10
+
+SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+--
+-- Database: `starterkit`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Tabellstruktur for tabell `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `description` text COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellstruktur for tabell `role_route`
+--
+
+CREATE TABLE `role_route` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `route_id` int(10) unsigned NOT NULL,
+  `role_id` int(10) unsigned NOT NULL,
+  `access_level` int(11) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `role_route_route_id_foreign` (`route_id`),
+  KEY `role_route_role_id_foreign` (`role_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellstruktur for tabell `routes`
+--
+
+CREATE TABLE `routes` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `host` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `method` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `uri` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `name` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `action` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `before` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `after` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `active` tinyint(1) NOT NULL DEFAULT '1',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=34 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellstruktur for tabell `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `users_email_unique` (`email`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
+
+-- --------------------------------------------------------
+
+--
+-- Tabellstruktur for tabell `user_role`
+--
+
+CREATE TABLE `user_role` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(10) unsigned NOT NULL,
+  `role_id` int(10) unsigned NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`id`),
+  KEY `user_role_user_id_foreign` (`user_id`),
+  KEY `user_role_role_id_foreign` (`role_id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=2 ;
+
+--
+-- Begrensninger for dumpede tabeller
+--
+
+--
+-- Begrensninger for tabell `role_route`
+--
+ALTER TABLE `role_route`
+  ADD CONSTRAINT `role_route_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_route_route_id_foreign` FOREIGN KEY (`route_id`) REFERENCES `routes` (`id`) ON DELETE CASCADE;
+
+--
+-- Begrensninger for tabell `user_role`
+--
+ALTER TABLE `user_role`
+  ADD CONSTRAINT `user_role_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `user_role_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
