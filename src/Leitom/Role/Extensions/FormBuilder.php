@@ -249,7 +249,7 @@ class FormBuilder extends IlluminateFormBuilder
             return $this->manager->hasRouteAccess($formMethod, $route);
         } else if (isset($parameters['action'])) {
             if (is_array($parameters['action'])) {
-                $action = current($parameters);
+                $action = current($parameters['action']);
             } else {
                 $action = $parameters['action'];
             }
