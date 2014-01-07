@@ -227,24 +227,36 @@ class FormBuilder extends IlluminateFormBuilder
     	return parent::radio($name, $value, $checked, $options);
     }
 
-	/**
-	 * Check if the user have role access
-	 *
-	 * @param  array $parameters
-	 * @return void
-	 */
-	protected function checkRoleAccess(array $parameters = array())
-	{
-		$formMethod = $this->getMethod(array_get($parameters, 'method', 'post'));
-		
-		if (isset($parameters['url'])) {
-			return $this->manager->hasUrlAccess($formMethod, $parameters['url']);
-		} else if (isset($parameters['route'])) {
-			return $this->manager->hasRouteAccess($formMethod, $parameters['route']);
-		} else if (isset($parameters['action'])) {
-			return $this->manager->hasActionAccess($formMethod, $parameters['action']);
-		}
-	}
+    /**
+     * Check if the user have role access
+     *
+     * @param  array $parameters
+     * @return void
+     */
+    protected function checkRoleAccess(array $parameters = array())
+    {
+        $formMethod = $this->getMethod(array_get($parameters, 'method', 'post'));
+        
+        if (isset($parameters['url'])) {
+            return $this->manager->hasUrlAccess($formMethod, $parameters['url']);
+        } else if (isset($parameters['route'])) {
+            if (is_array($parameters['route'])) {
+                $route = current($parameters['route']);
+            } else {
+                $route = $parameters['route'];
+            }
+            
+            return $this->manager->hasRouteAccess($formMethod, $route);
+        } else if (isset($parameters['action'])) {
+            if (is_array($parameters['action'])) {
+                $action = current($parameters);
+            } else {
+                $action = $parameters['action'];
+            }
+            
+            return $this->manager->hasActionAccess($formMethod, $action);
+        }
+    }
 
 	/**
 	 * Append a html5 readonly attribute if the user
