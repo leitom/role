@@ -72,7 +72,7 @@ class SyncRoutesCommand extends Command
 		// Trigger sync
 		$this->repository->sync($this->scanner, $this->roleRepository);
 
-		$this->info('All routes synced to persisant storage');
+		$this->info('Routes synced!');
 
 		$this->call('cache:clear');
 	}
