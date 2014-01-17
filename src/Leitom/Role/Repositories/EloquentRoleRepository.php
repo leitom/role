@@ -73,6 +73,20 @@ class EloquentRoleRepository  implements RoleRepositoryInterface
 	}
 
 	/**
+	 * Create a new role
+	 *
+	 * @param  string  $name
+	 * @param  string  $description
+	 * @return integer
+	 */
+	public function create($name, $description)
+	{
+		$role = $this->roles->create(array('name' => $name, 'description' => $description));
+		
+		return $role->id;
+	}
+
+	/**
 	 * A convenient way to attach a role to
 	 * a super admin role for easier development
 	 *

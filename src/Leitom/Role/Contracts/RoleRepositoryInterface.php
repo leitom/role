@@ -18,6 +18,15 @@ interface RoleRepositoryInterface
 	public function findById($id);
 
 	/**
+	 * Create a new role
+	 *
+	 * @param  string  $name
+	 * @param  string  $description
+	 * @return integer
+	 */
+	public function create($name, $description);
+
+	/**
 	 * A convenient way to attach a role to
 	 * a super admin role for easier development
 	 *

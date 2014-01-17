@@ -27,6 +27,9 @@ class RoleServiceProvider extends ServiceProvider
 		// It will also contain the auth before filter so that it does not have to
 		// be implemented at the same time.
 		\Route::filter($this->app['config']->get('role::role.control.identifier'), 'Leitom\Role\Filters\Role');
+
+		// Bind the implementation for use in controllers
+		$this->app->bind('Leitom\Role\Contracts\RoleRepositoryInterface', 'Leitom\Role\Repositories\EloquentRoleRepository');
 	}
 
 	/**
