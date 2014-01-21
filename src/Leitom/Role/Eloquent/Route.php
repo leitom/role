@@ -21,7 +21,7 @@ class Route extends \Eloquent
 	);
 
 	/**
-	 * On route can belong to many different roles
+	 * One route can belong to many different roles
 	 *
 	 * @return Eloquent\Relationship
 	 */

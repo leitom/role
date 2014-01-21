@@ -9,6 +9,19 @@ class Role extends \Eloquent
 	);
 
 	/**
+	 * Search for matching records
+	 *
+	 * @param  object  $query
+	 * @param  string  $search
+	 * @return object
+	 */
+	public function scopeSearch($query, $search)
+	{
+		return $query->where('name', 'LIKE', "%$search%")
+			  		 ->orWhere('description', 'LIKE', "%$search%");
+	}
+
+	/**
 	 * A role can belong to many users
 	 * default we use the User model shipped with laravel
 	 *
@@ -26,8 +39,9 @@ class Role extends \Eloquent
 	 */
 	public function routes()
 	{
-		return $this->belongsToMany('Leitom\Role\Eloquent\Route')->withPivot('access_level')
-																 ->orderBy('role_route.access_level', 'desc')
-																 ->withTimestamps();
+		return $this->belongsToMany('Leitom\Role\Eloquent\Route')
+					->withPivot('access_level')
+					->orderBy('role_route.access_level', 'desc')
+					->withTimestamps();
 	}
 }

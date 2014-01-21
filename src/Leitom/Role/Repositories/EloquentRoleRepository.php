@@ -54,11 +54,28 @@ class EloquentRoleRepository  implements RoleRepositoryInterface
 	/**
 	 * Get all available roles from storage
 	 *
+	 * @param  array $columns
 	 * @return array
 	 */
-	public function all()
+	public function all($columns = array('*'))
 	{
-		return $this->roles->all();
+		return $this->roles->all($collumns)->toArray();
+	}
+
+	/**
+	 * Get all with pagination attached
+	 *
+	 * @param  int 	   $perPage
+	 * @param  array   $columns
+	 * @return object
+	 */
+	public function paginate($perPage = 10, $search = null, $columns = array('*'))
+	{
+		if ($search) {
+			return $this->roles->search($search)->paginate($perPage, $columns);
+		}
+
+		return $this->roles->paginate($perPage, $columns);
 	}
 
 	/**
@@ -84,6 +101,21 @@ class EloquentRoleRepository  implements RoleRepositoryInterface
 		$role = $this->roles->create(array('name' => $name, 'description' => $description));
 		
 		return $role->id;
+	}
+
+	/**
+	 * Delete a role from storage
+	 *
+	 * @param  int 		$id
+	 * @return boolean
+	 */
+	public function delete($id)
+	{
+		$role = $this->findById($id);
+		
+		if ( ! $role) return false;
+		
+		return $role->delete();
 	}
 
 	/**

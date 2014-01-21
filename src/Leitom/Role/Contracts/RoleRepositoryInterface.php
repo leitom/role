@@ -5,9 +5,20 @@ interface RoleRepositoryInterface
 	/**
 	 * Get all available roles from storage
 	 *
+	 * @param  array $columns
 	 * @return array
 	 */
-	public function all();
+	public function all($columns = array('*'));
+
+	/**
+	 * Get all with pagination attached
+	 *
+	 * @param  int 	   $perPage
+	 * @param  string  $search
+	 * @param  array   $columns
+	 * @return object
+	 */
+	public function paginate($perPage = 10, $search = null, $columns = array('*'));
 
 	/**
 	 * Find one single role from storage by id
@@ -25,6 +36,14 @@ interface RoleRepositoryInterface
 	 * @return integer
 	 */
 	public function create($name, $description);
+
+	/**
+	 * Delete a role from storage
+	 *
+	 * @param  int 		$id
+	 * @return boolean
+	 */
+	public function delete($id);
 
 	/**
 	 * A convenient way to attach a role to
