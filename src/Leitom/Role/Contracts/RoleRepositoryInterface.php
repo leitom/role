@@ -23,10 +23,10 @@ interface RoleRepositoryInterface
 	/**
 	 * Find one single role from storage by id
 	 *
-	 * @param  integer $id
-	 * @return array
+	 * @param  integer 		$id
+	 * @return array|object
 	 */
-	public function findById($id);
+	public function findById($id, $columns = array('*'));
 
 	/**
 	 * Create a new role
@@ -36,6 +36,16 @@ interface RoleRepositoryInterface
 	 * @return integer
 	 */
 	public function create($name, $description);
+
+	/**
+	 * Update an existing role
+	 *
+	 * @param  integer 	$id
+	 * @param  string 	$name
+	 * @param  string 	$description
+	 * @return boolean
+	 */
+	public function update($id, $name, $description);
 
 	/**
 	 * Delete a role from storage

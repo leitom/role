@@ -82,11 +82,11 @@ class EloquentRoleRepository  implements RoleRepositoryInterface
 	 * Find one single role from storage by id
 	 *
 	 * @param  integer $id
-	 * @return array
+	 * @return object
 	 */
-	public function findById($id)
+	public function findById($id, $columns = array('*'))
 	{
-		return $this->roles->find($id);
+		return $this->roles->find($id, $columns);
 	}
 
 	/**
@@ -101,6 +101,24 @@ class EloquentRoleRepository  implements RoleRepositoryInterface
 		$role = $this->roles->create(array('name' => $name, 'description' => $description));
 		
 		return $role->id;
+	}
+
+	/**
+	 * Update an existing role
+	 *
+	 * @param  integer 	$id
+	 * @param  string 	$name
+	 * @param  string 	$description
+	 * @return boolean
+	 */
+	public function update($id, $name, $description)
+	{
+		$role = $this->findById($id);
+
+		$role->name = $name;
+		$role->description = $description;
+
+		return $role->save();
 	}
 
 	/**
