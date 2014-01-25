@@ -27,27 +27,30 @@ class SyncRoutesCommand extends Command
 	/**
 	 * The route repository to use
 	 *
-	 * @var 
+	 * @var \Leitom\Role\Contracts\RouteRepositoryInterface $repository
 	 */
 	protected $repository;
 
 	/**
 	 * The scanner instance to use
 	 *
-	 * @var Leitom\Role\RouteScannerInterface $scanner;
+	 * @var \Leitom\Role\RouteScannerInterface $scanner
 	 */
 	protected $scanner;
 
 	/**
 	 * The role repository to use
 	 *
-	 * @var Leitom\Role\Contracts\RoleRepositoryInterface $roleRepository
+	 * @var \Leitom\Role\Contracts\RoleRepositoryInterface $roleRepository
 	 */
 	protected $roleRepository;
 
 	/**
 	 * Create a new command instance.
 	 *
+	 * @param  \Leitom\Role\Contracts\RouteRepositoryInterface 	$repository
+	 * @param  \Leitom\Role\RouteScannerInterface 				$scanner
+	 * @param  \Leitom\Role\Contracts\RoleRepositoryInterface 	$roleRepository
 	 * @return void
 	 */
 	public function __construct(
