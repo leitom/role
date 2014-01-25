@@ -30,6 +30,8 @@ class RoleServiceProvider extends ServiceProvider
 
 		// Bind the implementation for use in controllers
 		$this->app->bind('Leitom\Role\Contracts\RoleRepositoryInterface', 'Leitom\Role\Repositories\EloquentRoleRepository');
+		$this->app->bind('Leitom\Role\Contracts\RouteRepositoryInterface', 'Leitom\Role\Repositories\EloquentRouteRepository');
+		$this->app->bind('Leitom\Role\Contracts\RouteScannerInterface', 'Leitom\Role\RouteScanner');
 	}
 
 	/**
